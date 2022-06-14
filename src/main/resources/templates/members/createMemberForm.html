@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:replace="fragments/header :: header" />
+<style>
+    .fieldError {
+        border-color: #bd2130;
+    }
+</style>
+<body>
+
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+
+    <form role="form" action="/members/new" th:object="${member}" method="post">
+        <div class="form-group">
+            <label th:for="name">이름</label>
+
+            <input type="text" th:field="*{name}" class="form-control" placeholder="이름을 입력하세요"
+                   th:class="${#fields.hasErrors('name')}? 'form-control fieldError' : 'form-control'">
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Incorrect data</p>
+
+        </div>
+
+        <div class="form-group">
+            <label th:for="companyName">회사명</label>
+            <input type="text" th:field="${member.companyName}" class="form-control"
+                   placeholder="회사를 입력하세요.">
+        </div>
+
+        <div class="form-group">
+            <label th:for="teamName">팀명</label>
+            <input type="text" th:field="${member.teamName}" class="form-control"
+                   placeholder="팀명을 입력하세요.">
+        </div>
+
+        <div class="form-group">
+            <label th:for="phone">전화번호</label>
+            <input type="text" th:field="*{phone}" class="form-control"
+                   placeholder="전화번호를 입력하세요.">
+        </div>
+
+        <div class="form-group">
+            <label th:for="value">선결제 금액</label>
+            <input type="text" th:field="${member.balance}"
+                   th:class="${#fields.hasErrors('balance')}? 'form-control fieldError' : 'form-control'"
+                   placeholder="금액을 입력하세요.">
+            <p th:if="${#fields.hasErrors('balance')}" th:errors="*{balance}">Incorrect data</p>
+        </div>
+
+        <button type="submit" class="btn btn-primary">등록</button>
+        <button type="button" class="btn btn-secondary"
+                onclick="location.href='home.html'"
+                th:onclick="|location.href='@{/}'|">취소</button>
+    </form>
+    <br/>
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+
+</body>
+</html>

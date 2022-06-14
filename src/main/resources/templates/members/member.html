@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:replace="fragments/header :: header" />
+
+<body>
+
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+
+    <!-- 추가 -->
+    <h2 th:if="${param.created}" th:text="'저장 완료'"></h2>
+    <h2 th:if="${param.modified}" th:text="'수정 완료'"></h2>
+
+    <div th:object="${member}">
+        <div class="row align-items-start">
+            <div class="form-group col">
+                <label th:for="name">이름</label>
+                <input text="text" th:field="${member.name}" class="form-control" th:value="*{name}" readonly>
+            </div>
+
+            <div class="form-group col">
+                <label th:for="city">회사</label>
+                <input type="text" th:field="${member.companyName}" class="form-control" value="회사" th:value="${member.companyName}" readonly>
+            </div>
+
+            <div class="form-group col">
+                <label th:for="street">팀</label>
+                <input type="text" th:field="${member.teamName}" class="form-control" value="팀" th:value="${member.teamName}" readonly>
+            </div>
+
+            <div class="form-group col">
+                <label th:for="phone">전화번호</label>
+                <input type="text" th:field="*{phone}" class="form-control" value="01000000000" th:value="*{phone}" readonly>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg"
+                        onclick="location.href='editForm.html'"
+                        th:onclick="|location.href='@{/members/{memberId}/edit(memberId=${member.id})}'|"
+                        type="button">회원 정보 수정</button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-secondary btn-lg"
+                        th:onclick="|location.href='@{/members}'|"
+                        type="button">목록으로</button>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+
+</body>
+</html>
+
+</body>
+</html>
