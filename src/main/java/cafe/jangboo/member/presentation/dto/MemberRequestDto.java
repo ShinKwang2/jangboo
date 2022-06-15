@@ -20,22 +20,19 @@ public class MemberRequestDto {
     private String teamName;
     private String phone;
     @NotNull(message = "잔액 입력은 필수 입니다.")
-    private int balance;
+    private Integer balance;
 
     public MemberRequestDto() {
     }
 
     @Builder
-    public MemberRequestDto(String name, String companyName, String teamName, String phone, int balance) {
+    public MemberRequestDto(String name, String companyName, String teamName, String phone, Integer balance) {
         this.name = name;
         this.companyName = companyName;
         this.teamName = teamName;
         this.phone = phone;
         this.balance = balance;
     }
-
-
-
 
     public MemberEntity toEntity() {
         return MemberEntity.builder()

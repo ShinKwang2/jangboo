@@ -2,7 +2,9 @@ package cafe.jangboo.member.domain;
 
 import cafe.jangboo.BaseEntity;
 import cafe.jangboo.Money;
-import cafe.jangboo.order.OrderEntity;
+import cafe.jangboo.order.domain.OrderEntity;
+import cafe.jangboo.order.domain.UseEntity;
+import cafe.jangboo.order.domain.PointEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -49,5 +51,15 @@ public class MemberEntity extends BaseEntity {
         this.name = name;
         this.company = company;
         this.phone = phone;
+    }
+
+    //== 비즈니스 로직 ==//
+    /** Money balance 증가 */
+    public void addBalance(Money money) {
+        this.balance = new Money(this.balance.getValue() + money.getValue());
+    }
+
+    public void removeBalance(Money money) {
+        this.balance = new Money(this.balance.getValue() - money.getValue());
     }
 }

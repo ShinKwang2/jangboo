@@ -1,11 +1,12 @@
 package cafe.jangboo.member.presentation.dto;
 
 import cafe.jangboo.Money;
-import cafe.jangboo.member.domain.Company;
 import cafe.jangboo.member.domain.MemberEntity;
+import cafe.jangboo.order.domain.UseEntity;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 @Data
 public class MemberResponseDto {
@@ -18,12 +19,7 @@ public class MemberResponseDto {
     private String phone;
     private Money balance;
 
-    public MemberResponseDto(MemberUpdateDto updateDto) {
-        this.name = updateDto.getName();
-        this.companyName = updateDto.getCompanyName();
-        this.teamName = updateDto.getTeamName();
-        this.phone = updateDto.getPhone();
-    }
+    private List<UseEntity> orderList;
 
     public MemberResponseDto(MemberEntity entity) {
         this.id = entity.getId();

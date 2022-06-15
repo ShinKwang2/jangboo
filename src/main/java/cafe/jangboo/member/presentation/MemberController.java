@@ -6,6 +6,7 @@ import cafe.jangboo.member.presentation.dto.MemberRequestDto;
 import cafe.jangboo.member.presentation.dto.MemberResponseDto;
 import cafe.jangboo.member.presentation.dto.MemberUpdateDto;
 import cafe.jangboo.member.service.MemberService;
+import cafe.jangboo.order.OrderRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -27,7 +29,9 @@ public class MemberController {
 
     @GetMapping
     public String memberList(Model model) {
-        List<MemberResponseDto> members = memberService.findAll();
+        List<MemberResponseDto> members = memberService.findAll().stream()
+                .map(MemberResponseDto::new)
+                .collect(Collectors.toList());
         model.addAttribute("members", members);
 
         return "members/memberList";
@@ -35,11 +39,13 @@ public class MemberController {
 
     @GetMapping("/{memberId}")
     public String member(@PathVariable Long memberId, Model model) {
-        MemberResponseDto responseDto = memberService.findOne(memberId);
+        MemberEntity findMember = memberService.findOne(memberId);
+        MemberResponseDto responseDto = new MemberResponseDto(findMember);
 
         log.info("responseDto={}",responseDto);
 
         model.addAttribute("member", responseDto);
+        model.addAttribute("order", new OrderRequestDto());
         return "members/member";
     }
 
@@ -57,7 +63,7 @@ public class MemberController {
             return "members/createMemberForm";
         }
 
-        Long memberId = memberService.join(requestDto);
+        Long memberId = memberService.join(requestDto.toEntity());
         redirectAttributes.addAttribute("memberId", memberId);
         redirectAttributes.addAttribute("created", true);
         return "redirect:/members/{memberId}";
@@ -65,7 +71,8 @@ public class MemberController {
 
     @GetMapping("/{memberId}/edit")
     public String editForm(@PathVariable Long memberId, Model model) {
-        MemberResponseDto responseDto = memberService.findOne(memberId);
+        MemberEntity findMember = memberService.findOne(memberId);
+        MemberResponseDto responseDto = new MemberResponseDto(findMember);
 
         model.addAttribute("member", responseDto);
         return "members/memberEdit";

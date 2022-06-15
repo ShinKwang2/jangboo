@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+
+<div class="container">
+
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>적립 금액</th>
+                <th>사용 금액</th>
+                <th>주문 날짜</th>
+                <th>상태</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${orders}">
+                <td th:text="${order.id}"></td>
+                <td th:text="${order.pointAmount}"></td>
+                <td th:text="${order.useAmount}"></td>
+                <td th:text="${order.orderDate}"></td>
+                <td th:text="${order.status}"></td>
+                <td>
+                    <a th:if="${order.status.name() == 'ORDER'}" href="#" th:href="|javascript:cancel(${order.id})|"
+                       class="btn btn-danger">CANCEL</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div>
+        <form role="form" th:action="@{|/members/${memberId}/orders/save|}" th:object="${order}" class="form-inline" method="post">
+            <div class="form-group mx-sm-3 mb-2">
+                <label th:for="amount" class="sr-only">적립 금액</label>
+                <input type="text" class="form-control" th:field="${order.amount}" placeholder="적립 금액을 입력하세요.">
+            </div>
+            <button class="btn btn-primary mb-2" type="submit">적립</button>
+        </form>
+
+        <form role="form" th:action="@{|/members/${memberId}/orders/use|}" th:object="${order}" class="form-inline" method="post">
+            <div class="form-group mx-sm-3 mb-2">
+                <label th:for="amount" class="sr-only">사용 금액</label>
+                <input type="text" class="form-control" th:field="${order.amount}" placeholder="사용 금액을 입력하세요.">
+            </div>
+            <button class="btn btn-danger mb-2" type="submit">사용</button>
+        </form>
+
+        </div>
+        <br>
+    </div>
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h3 class="display-4">남은 금액: <span th:text="${memberBalance}">금액</span></h3>
+            <hr class="my-4">
+            <button class="btn btn-success bt-lg btn-block" type="button"
+                    onclick="location.href='home.html'"
+                    th:onclick="|location.href='@{/}'|">홈으로</button>
+        </div>
+    </div>
+
+
+
+
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+</body>
+<script>
+    function cancel(id) {
+        var form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", "/orders/" + id + "/cancel");
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
+</html>

@@ -22,22 +22,19 @@ public class MemberService {
 
     /** 회원 등록*/
     @Transactional
-    public Long join(MemberRequestDto memberDto) {
-        return memberRepository.save(memberDto.toEntity()).getId();
+    public Long join(MemberEntity member) {
+        return memberRepository.save(member).getId();
     }
 
     /** 회원 전체 조회 */
-    public List<MemberResponseDto> findAll() {
-        return memberRepository.findAllDesc().stream()
-                .map(MemberResponseDto::new)
-                .collect(Collectors.toList());
+    public List<MemberEntity> findAll() {
+        return memberRepository.findAllDesc();
     }
 
     /** 회원 단건 조회 */
-    public MemberResponseDto findOne(Long memberId) {
-        MemberEntity findMember = memberRepository.findById(memberId)
+    public MemberEntity findOne(Long memberId) {
+        return memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다."));
-        return new MemberResponseDto(findMember);
     }
 
     /** 회원 수정 */

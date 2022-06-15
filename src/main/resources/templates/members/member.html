@@ -12,31 +12,36 @@
     <h2 th:if="${param.modified}" th:text="'수정 완료'"></h2>
 
     <div th:object="${member}">
-        <div class="row align-items-start">
-            <div class="form-group col">
+            <div class="form-group">
                 <label th:for="name">이름</label>
                 <input text="text" th:field="${member.name}" class="form-control" th:value="*{name}" readonly>
             </div>
 
-            <div class="form-group col">
+            <div class="form-group">
                 <label th:for="city">회사</label>
                 <input type="text" th:field="${member.companyName}" class="form-control" value="회사" th:value="${member.companyName}" readonly>
             </div>
 
-            <div class="form-group col">
+            <div class="form-group">
                 <label th:for="street">팀</label>
                 <input type="text" th:field="${member.teamName}" class="form-control" value="팀" th:value="${member.teamName}" readonly>
             </div>
 
-            <div class="form-group col">
+            <div class="form-group">
                 <label th:for="phone">전화번호</label>
                 <input type="text" th:field="*{phone}" class="form-control" value="01000000000" th:value="*{phone}" readonly>
             </div>
-        </div>
 
 
 
         <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-success btn-lg"
+                        onclick="location.href='orderList.html'"
+                        th:onclick="|location.href='@{/members/{memberId}/orders(memberId=${member.id})}'|">
+                    주문 내역</button>
+            </div>
+
             <div class="col">
                 <button class="w-100 btn btn-primary btn-lg"
                         onclick="location.href='editForm.html'"
@@ -50,6 +55,7 @@
             </div>
         </div>
     </div>
+
     <br>
 
     <div th:replace="fragments/footer :: footer" />

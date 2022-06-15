@@ -11,9 +11,9 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Money {
     @Column(name = "money")
-    private int value;
+    private Integer value;
 
-    public Money(int value) {
+    public Money(Integer value) {
         this.value = value;
     }
 

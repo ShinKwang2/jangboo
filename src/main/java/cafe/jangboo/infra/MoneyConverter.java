@@ -1,4 +1,4 @@
-package cafe.jangboo.member.infra;
+package cafe.jangboo.infra;
 
 import cafe.jangboo.Money;
 
