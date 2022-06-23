@@ -26,13 +26,8 @@ class OrderServiceTest {
     private OrderService orderService;
 
     @Autowired
-    private OrderRepository orderRepository;
-
-    @Autowired
     private MemberService memberService;
 
-    @Autowired
-    private MemberRepository memberRepository;
 
     @Test
     void 적립() throws Exception {

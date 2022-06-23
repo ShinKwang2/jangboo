@@ -3,8 +3,6 @@ package cafe.jangboo.member.domain;
 import cafe.jangboo.BaseEntity;
 import cafe.jangboo.Money;
 import cafe.jangboo.order.domain.OrderEntity;
-import cafe.jangboo.order.domain.UseEntity;
-import cafe.jangboo.order.domain.PointEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +12,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED) //JPA를 위해
 @Getter
 @Table(name = "members")
 @Entity
@@ -47,7 +45,11 @@ public class MemberEntity extends BaseEntity {
         this.balance = balance;
     }
 
-    public void update(String name, Company company, String phone) {
+    /**
+     * 여기선 Money를 수정하지 않는다.
+     * 다만 이름을 잘못 적었거나, 회사를 옮기거나, 혹은 전화번호를 수정하기 위한 메소드이다.
+     */
+    public void updateMember(String name, Company company, String phone) {
         this.name = name;
         this.company = company;
         this.phone = phone;

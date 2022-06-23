@@ -54,9 +54,12 @@
         <br>
     </div>
 
+
+
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <h3 class="display-4">남은 금액: <span th:text="${memberBalance}">금액</span></h3>
+            <h3 class="display-4">남은 금액: <span th:text="${#numbers.formatInteger(memberBalance, 3, 'COMMA')}">금액</span></h3>
+            <!-- 금액을 3단위로 쉼표 주기-->
             <hr class="my-4">
             <button class="btn btn-success bt-lg btn-block" type="button"
                     onclick="location.href='home.html'"
